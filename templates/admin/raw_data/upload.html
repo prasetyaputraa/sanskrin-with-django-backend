@@ -1,0 +1,54 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_modify %}
+
+{% block extrahead %}{{ block.super }}
+<script src="{% url 'admin:jsi18n' %}"></script>
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">{% endblock %}
+
+{% block coltype %}colM{% endblock %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-form{% endblock %}
+
+{% if not is_popup %}
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+&rsaquo; <a href="">Raw Data</a>
+&rsaquo; {% if has_view_permission %}<a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>{% else %}{{ opts.verbose_name_plural|capfirst }}{% endif %}
+<!-- &rsaquo; {% if add %}{% blocktranslate with name=opts.verbose_name %}Add {{ name }}{% endblocktranslate %}{% else %}{{ original|truncatewords:"18" }}{% endif %} -->
+</div>
+{% endblock %}
+{% endif %}
+
+{% block content %}<div id="content-main">
+<form class="form-row" {% if has_file_field %}enctype="multipart/form-data" {% endif %}{% if form_url %}action="{{ form_url }}" {% endif %}method="post" id="{{ opts.model_name }}_form" novalidate>{% csrf_token %}{% block form_top %}{% endblock %}
+  {% if errors %}<div class="error">{{ errors.excel_file }}</div>{% endif %}
+  {{ form }}
+  <input type="submit" id="submit" name="excel-submit" value="Submit & Process">
+</form>
+<div class="module" style="margin-top: 32px;">
+  <table>
+    <caption>Current Dictionary Statistics</caption>
+    {% for key, value in dictionary_statistics.items %}
+    <tr>
+      <td>{{ key }}</td>
+      <td>{{ value }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% if samples %}
+  <div class="module" style="margin-top: 32px;">
+    <h2>SAMPLES OF PROCESSED DATA</h2>
+    <div style="margin: 16px">
+    </div>
+    {% autoescape off %}
+    {{ samples }}
+    {% endautoescape %}
+  </div>
+{% endif %}
+</div>
+{% endblock %}

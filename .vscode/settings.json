@@ -1,0 +1,20 @@
+{
+  "python.pythonPath": "/home/dwiprasetya/development/final-task/server/bin/python",
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#007542",
+    "activityBar.activeBorder": "#c780ff",
+    "activityBar.background": "#007542",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#c780ff",
+    "activityBarBadge.foreground": "#15202b",
+    "statusBar.background": "#004225",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#007542",
+    "titleBar.activeBackground": "#004225",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#00422599",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#004225"
+}
