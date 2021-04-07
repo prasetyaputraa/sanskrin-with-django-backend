@@ -27,5 +27,6 @@ urlpatterns = [
     path('admin/', admin_site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
     path('api/', include('webapps.API.urls')),
-    path('submission/', include('django_apps.submitted_translations.urls'))
+    path('submission/', include('django_apps.submitted_translations.urls')),
+    path('raw-data/', include('django_apps.raw_data.urls'))
 ]

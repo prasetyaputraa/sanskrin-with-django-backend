@@ -1,11 +1,12 @@
 import magic
+import os
 
 from django import forms
 from django.views import View
 from django.template.response import TemplateResponse
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import UploadedFile
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseServerError
 
 import pandas as pd
 
@@ -99,3 +100,19 @@ class RawDataView(View):
             kwargs['errors'] = form.errors
         
         return self.get(request, **kwargs)
+
+class DownloadInUse(View):
+    def get(self, request):
+
+        file_path = os.getcwd() + '/raw_excels/in_use.xlsx'
+
+        try:
+            with open(file_path, 'rb') as f:
+                file_data = f.read()
+
+            response = HttpResponse(file_data, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            response['Content-Disposition'] = 'attachment; filename="in_use.xlsx"'
+        except IOError as e:
+            response = HttpResponseServerError(e)
+
+        return response
